@@ -1,0 +1,73 @@
+
+Generating correlated random variables
+===
+author: Michael Haranen
+date: `r date()`
+transition: rotate
+
+<small>
+Coursera's Developing Data Products
+</small>
+<small>
+Course Project: Shiny Application and Reproducible Pitch
+</small>
+
+Description
+===
+The simple Shiny application generates two normal random variables with desired correlation and display the scatter plot of simulated data. 
+
+- First, the user must define the number of simulations with slider *Number of simulations*. 
+
+- Then the desired correlation coefficient must be defined with the slider*Correlation*.
+
+- After pushing the *Generate!* button the application will generate two random variables with defined correlation, draw the scatter plot and show actual correlation. 
+
+- The simulation will be updated every time the button *Generate!* is pushed.  
+
+
+
+Calculation
+===
+This is a function which generates the random variable *y*, which has a correlation *r* with the given random *x*. 
+
+```{r,run=TRUE}
+correlatedValue = function(x, r){
+        r2 = r**2
+        ve = 1-r2
+        SD = sqrt(ve)
+        e  = rnorm(length(x), mean=0, sd=SD)
+        y  = r*x + e
+        return(y)
+}
+
+```
+
+
+Example simulation
+===
+Here is an example of 500 simulated data pairs *(x,y)* and correlation 0.85.
+
+```{r, echo=TRUE}
+n<-500
+r<-0.85
+x = rnorm(n)
+y = correlatedValue(x, r)
+```
+
+The actual correlation between two random variables is:
+```{r, echo=FALSE}
+cor(x,y)
+```
+
+In the next slide you can see the scatter plot of the simulated data.
+
+
+Scatter plot
+===
+
+```{r, echo=FALSE}
+plot(x,y, xlab="X", ylab="Y")
+
+```
+
+
